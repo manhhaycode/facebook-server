@@ -14,6 +14,8 @@ const validationMiddleware = (type: any, skipMissingProperties = false): Request
                     })
                     .join(', ');
                 next(new HttpException(400, message));
+            } else {
+                next();
             }
         });
     };
