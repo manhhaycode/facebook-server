@@ -29,7 +29,7 @@ class UserService {
             updateAt: Date.now(),
         });
 
-        return this.createToken(user);
+        return this.createToken(createdUser);
     }
 
     private createToken(user: IUser): TokenData {
