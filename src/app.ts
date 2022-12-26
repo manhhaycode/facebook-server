@@ -5,6 +5,8 @@ import hpp from 'hpp';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
+import { Logger } from '@core/utils';
+import { errorMiddleware } from '@core/middleware';
 export default class App {
     public app: express.Application;
     public port: string | number;
@@ -43,20 +45,21 @@ export default class App {
             this.app.use(morgan('dev'));
             this.app.use(cors({ origin: true, optionsSuccessStatus: 200 }));
         }
+        this.app.use(errorMiddleware);
     }
 
     private async connectToDataBase() {
         mongoose.set('strictQuery', true);
         const connectString = process.env.MONGODB_URI;
         if (!connectString) {
-            console.log('Connect string is invalid');
+            Logger.info('Connect string is invalid');
             return;
         }
         try {
             await mongoose.connect(connectString);
-            console.log('connect successfully');
+            Logger.info('connect database successfully');
         } catch (error) {
-            console.log('error');
+            Logger.info('error');
         }
     }
 }
