@@ -1,7 +1,5 @@
 import { Route } from '@core/interfaces';
-import { validationMiddleware } from '@core/middleware';
 import { Router } from 'express';
-import RegisterDto from './dtos/register.dto';
 import UserController from './users.controller';
 
 export default class UsersRoute implements Route {
@@ -15,7 +13,11 @@ export default class UsersRoute implements Route {
     }
 
     private initializeRoute() {
+<<<<<<< HEAD
         // POST : http://localhost:5000/api/user
         this.router.post(this.path, validationMiddleware(RegisterDto, true), this.UserController.register);
+=======
+        this.router.post(this.path, this.UserController.register); // POST : http://localhost:5000/api/user
+>>>>>>> 1d7cc5bb21bea4785647205b9f79cba1a0d021b8
     }
 }
