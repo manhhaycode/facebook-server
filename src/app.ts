@@ -25,9 +25,9 @@ export default class App {
 
     public listen() {
         this.app.listen(this.port, () => {
-            console.log('====================================');
+            console.log('=====================================');
             console.log(`Sever is listening on port ${this.port}`);
-            console.log('====================================');
+            console.log('=====================================');
         });
     }
     private initializeRoutes(routes: Route[]) {
