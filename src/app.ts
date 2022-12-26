@@ -17,9 +17,10 @@ export default class App {
         this.port = process.env.PORT || 5000;
         this.production = process.env.NODE_ENV == 'production' ? true : false;
 
-        this.initializeRoutes(routes);
+        // Thứ tự này rất quan trọng lưu ý initializeRoutes phải để cuối cùng
         this.initializeMiddleware();
         this.connectToDataBase();
+        this.initializeRoutes(routes);
     }
 
     public listen() {
@@ -46,6 +47,8 @@ export default class App {
             this.app.use(cors({ origin: true, optionsSuccessStatus: 200 }));
         }
         this.app.use(errorMiddleware);
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: true }));
     }
 
     private async connectToDataBase() {
