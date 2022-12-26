@@ -21,7 +21,7 @@ class UserService {
         }
 
         const salt = await bcryptjs.genSalt(10);
-        const hashedPassword = bcryptjs.hash(model.password!, salt);
+        const hashedPassword = await bcryptjs.hash(model.password!, salt);
         const createdUser: IUser = await this.UserSchema.create({
             ...model,
             password: hashedPassword,
@@ -41,3 +41,5 @@ class UserService {
         };
     }
 }
+
+export default UserService;
