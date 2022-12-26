@@ -9,10 +9,10 @@ export default class IndexRoute implements Route {
     public indexController = new IndexController();
 
     constructor() {
-        this.initializeRoutes();
+        this.initializeRoute();
     }
 
-    private initializeRoutes() {
+    private initializeRoute() {
         this.router.get(this.path, this.indexController.index);
     }
 }
