@@ -1,6 +1,6 @@
 import 'dotenv/config';
-import { IndexRoute } from './modules/index/index';
-import { validateEnv } from './core/utils';
+import { IndexRoute } from '@modules/index';
+import { validateEnv } from '@core/utils';
 import App from './app';
 
 validateEnv();
