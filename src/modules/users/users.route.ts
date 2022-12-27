@@ -27,6 +27,6 @@ export default class UsersRoute implements Route {
             this.UserController.update,
         );
 
-        this.router.post(this.path + '/:id', authMiddleware, this.UserController.getUserById);
+        this.router.get(this.path + '/:id', authMiddleware, this.UserController.getUserById);
     }
 }
