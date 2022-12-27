@@ -1,3 +1,5 @@
+import { HttpException } from '@core/exceptions';
+import { isEmptyObject } from '@core/utils';
 import { DataStoredInToken } from '@modules/auth';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
@@ -13,8 +15,14 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
         req.user.id = user.id;
         next();
-    } catch (error) {
-        res.status(401).json({ message: 'Token is not vaild' });
+    } catch (_error) {
+        const error = (_error as HttpException).message;
+
+        if (error == 'jwt malformed') {
+            res.status(401).json({ message: 'Token is not vaild' });
+        } else {
+            res.status(401).json({ message: 'Token is expired' });
+        }
     }
 };
 
