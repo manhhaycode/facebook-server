@@ -1,3 +1,4 @@
+import { model } from 'mongoose';
 import { DataStoredInToken } from '@modules/auth';
 import { HttpException } from '@core/exceptions';
 import { isEmptyObject } from '@core/utils';
