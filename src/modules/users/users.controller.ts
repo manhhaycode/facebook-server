@@ -27,4 +27,14 @@ export default class UsersController {
             next(error);
         }
     };
+
+    public getUserById = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            req;
+            const getUserById: IUser = await this.userService.getUserById(req.params['id']);
+            res.status(201).json(getUserById);
+        } catch (error) {
+            next(error);
+        }
+    };
 }

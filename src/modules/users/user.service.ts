@@ -7,6 +7,7 @@ import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import IUser from './users.interface';
 import { UpdateDto, RegisterDto } from './dtos';
+import mongoose from 'mongoose';
 class UserService {
     public UserSchema = UserSchema;
 
@@ -77,6 +78,19 @@ class UserService {
         }
 
         return updateUser;
+    }
+
+    public async getUserById(userId: string): Promise<IUser> {
+        if (!mongoose.isValidObjectId(userId)) {
+            throw new HttpException(400, 'Id is not valid.');
+        }
+        const user = await this.UserSchema.findById(userId).exec();
+        if (!user) {
+            throw new HttpException(400, 'Id is not exits.');
+        }
+        user.password = '';
+
+        return user;
     }
 
     private createToken(user: IUser): TokenData {
