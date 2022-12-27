@@ -16,4 +16,13 @@ export default class AuthController {
             next(error);
         }
     };
+
+    public getCurrentLoginUser = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const user = await this.authService.getCurrentLoginUser(req.user.id);
+            res.status(201).json(user);
+        } catch (error) {
+            next(error);
+        }
+    };
 }
