@@ -23,6 +23,9 @@ const UserSchema = new Schema({
     avatar: {
         type: String,
     },
+    token: {
+        type: String,
+    },
     createAt: {
         type: Date,
         default: Date.now(),

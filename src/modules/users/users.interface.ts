@@ -7,6 +7,7 @@ interface IUser {
     email: string;
     password: string;
     avatar: string;
+    token: string;
     createAt: Date;
     updateAt: Date;
 }
