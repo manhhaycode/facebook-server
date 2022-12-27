@@ -37,7 +37,7 @@ class AuthService {
     private createToken(user: IUser): TokenData {
         const dataInToken: DataStoredInToken = { id: user._id };
         const secret: string = process.env.JWT_TOKEN_SECRET || '';
-        const expiresIn: number = 120;
+        const expiresIn: string = '30d';
         return {
             token: jwt.sign(dataInToken, secret, { expiresIn: expiresIn }),
         };
