@@ -1,3 +1,4 @@
-import Route from "./routes.interface";
+import IPagination from './IPagination.interface';
+import Route from './routes.interface';
 
-export {Route};
+export { Route, IPagination };

@@ -30,9 +30,19 @@ export default class UsersController {
 
     public getUserById = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            req;
-            const getUserById: IUser = await this.userService.getUserById(req.params['id']);
-            res.status(201).json(getUserById);
+            const user: IUser = await this.userService.getUserById(req.params['id']);
+            res.status(201).json(user);
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    public getAllPaging = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const page = Number(req.query.page);
+            const keyword = req.query.keyword || '';
+            const user = await this.userService.getAllPaging(keyword.toString(), page);
+            res.status(201).json(user);
         } catch (error) {
             next(error);
         }

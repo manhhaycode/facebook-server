@@ -29,7 +29,7 @@ class AuthService {
     }
 
     public async getCurrentLoginUser(userId: String): Promise<IUser> {
-        const user = await this.UserSchema.findById(userId).exec();
+        const user = await this.UserSchema.findById(userId, '-password').exec();
         if (!user) throw new HttpException(404, 'User is not exits.');
         return user;
     }

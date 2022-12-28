@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 import IUser from './users.interface';
 import { UpdateDto, RegisterDto } from './dtos';
 import mongoose from 'mongoose';
+import { IPagination } from '@core/interfaces';
 class UserService {
     public UserSchema = UserSchema;
 
@@ -66,13 +67,16 @@ class UserService {
 
         if (errorsBadRequest.length) throw new HttpException(400, errorsBadRequest.join(', '));
 
-        await this.UserSchema.findByIdAndUpdate(userId, {
-            ...model,
-            password: hashedPassword ? hashedPassword : user.password,
-            updateAt: Date.now(),
-        }).exec();
+        const updateUser = await this.UserSchema.findByIdAndUpdate(
+            userId,
+            {
+                ...model,
+                password: hashedPassword ? hashedPassword : user.password,
+                updateAt: Date.now(),
+            },
+            { new: true, select: '-password' },
+        ).exec();
 
-        const updateUser = await this.UserSchema.findById(userId).exec();
         if (!updateUser) {
             throw new HttpException(409, 'You are not an user');
         }
@@ -80,15 +84,41 @@ class UserService {
         return updateUser;
     }
 
+    public async getAllPaging(keyword: string, page: number): Promise<IPagination<IUser>> {
+        const pageSize: number = Number(process.env.PAGE_SIZE) | 10;
+
+        let query = {};
+
+        if (keyword) {
+            query = {
+                $or: [{ email: keyword }, { first_name: keyword }, { last_name: keyword }],
+            };
+        }
+
+        const users: IUser[] = await this.UserSchema.find(query, '-password')
+            .sort({ updateAt: -1 })
+            .skip((page - 1) * pageSize)
+            .limit(pageSize)
+            .exec();
+
+        const rowCount = await this.UserSchema.find(query).countDocuments().exec();
+
+        return {
+            total: rowCount,
+            page: page,
+            pageSize: pageSize,
+            items: users,
+        };
+    }
+
     public async getUserById(userId: string): Promise<IUser> {
         if (!mongoose.isValidObjectId(userId)) {
             throw new HttpException(400, 'Id is not valid.');
         }
-        const user = await this.UserSchema.findById(userId).exec();
+        const user = await this.UserSchema.findById(userId, '-password').exec();
         if (!user) {
             throw new HttpException(400, 'Id is not exits.');
         }
-        user.password = '';
 
         return user;
     }
