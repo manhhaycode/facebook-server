@@ -33,6 +33,7 @@ const UserSchema = new Schema({
     updateAt: {
         type: Date,
         default: Date.now(),
+        sort: true,
     },
 });
 
