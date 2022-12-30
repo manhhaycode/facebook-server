@@ -34,6 +34,15 @@ class UserService {
         return this.createToken(createdUser);
     }
 
+    public async deleteUser(userId: String) {
+        let status = await this.UserSchema.findByIdAndDelete(userId).exec();
+        if (status) {
+            return { message: 'Delete successfully' };
+        } else {
+            throw new HttpException(400, 'User is not exits.');
+        }
+    }
+
     public async updateUser(userId: String, model: UpdateDto): Promise<IUser> {
         if (isEmptyObject(model)) {
             throw new HttpException(400, 'Model is empty');

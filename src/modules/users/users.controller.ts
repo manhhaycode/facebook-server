@@ -28,6 +28,15 @@ export default class UsersController {
         }
     };
 
+    public remove = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const status = await this.userService.deleteUser(req.user.id);
+            res.status(201).json(status);
+        } catch (error) {
+            next(error);
+        }
+    };
+
     public getUserById = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const user: IUser = await this.userService.getUserById(req.params['id']);
