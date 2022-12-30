@@ -26,7 +26,7 @@ export default class UsersRoute implements Route {
             validationMiddleware(UpdateDto, true),
             this.UserController.update,
         );
-        this.router.post(this.path + '/delete', authMiddleware, this.UserController.remove);
+        this.router.delete(this.path + '/delete', authMiddleware, this.UserController.remove);
         this.router.get(this.path + '/paging', authMiddleware, this.UserController.getAllPaging);
         this.router.get(this.path + '/:id', authMiddleware, this.UserController.getUserById);
     }
