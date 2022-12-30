@@ -59,8 +59,14 @@ class UserService {
 
         if (model.email) {
             const isEmailChange = model.email !== user.email;
+            let isEmailExits;
             if (!isEmailChange) {
                 errorsBadRequest.push('This is the old email');
+            } else {
+                isEmailExits = await this.UserSchema.findOne({ email: model.email }).exec();
+                if (isEmailExits) {
+                    throw new HttpException(409, `Your email ${model.email} already exits.`);
+                }
             }
         }
 
