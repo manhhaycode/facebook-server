@@ -1,7 +1,7 @@
 export interface DataStoredInToken {
-    id: String;
+    id: string;
 }
 
 export interface TokenData {
-    token: String;
+    token: string;
 }

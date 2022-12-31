@@ -2,7 +2,7 @@ export interface IProfile {
     _id: string;
     user: string;
     company: string;
-    website: string;
+    websites: string[];
     location: string;
     status: string;
     skills: string[];
