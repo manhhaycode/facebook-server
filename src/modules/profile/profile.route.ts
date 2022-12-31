@@ -1,7 +1,7 @@
 import { Route } from '@core/interfaces';
 import { validationMiddleware, authMiddleware } from '@core/middleware';
 import { Router } from 'express';
-import CreateProfileDto from './dtos/CreateProfile.dto';
+import { CreateProfileDto, ExperienceDto } from './dtos';
 import ProfileController from './profile.controller';
 
 export default class ProfileRoute implements Route {
@@ -20,6 +20,13 @@ export default class ProfileRoute implements Route {
             authMiddleware,
             validationMiddleware(CreateProfileDto, true),
             this.ProfileController.create,
+        );
+
+        this.router.post(
+            this.path + '/experience',
+            authMiddleware,
+            validationMiddleware(ExperienceDto, true),
+            this.ProfileController.addExperience,
         );
     }
 }
