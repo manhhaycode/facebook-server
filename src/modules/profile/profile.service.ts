@@ -57,7 +57,7 @@ class ProfileService {
             ...experience,
         };
 
-        const profile = await ProfileSchema.findById(userId).exec();
+        const profile = await ProfileSchema.findOne({ user: userId }).exec();
         if (!profile) {
             throw new HttpException(400, 'There is not profile for this user');
         }
