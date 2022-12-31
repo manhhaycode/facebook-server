@@ -1,3 +1,4 @@
+import { ISocial } from './../profile/profile.interface';
 import { DataStoredInToken } from '@modules/auth';
 import { HttpException } from '@core/exceptions';
 import { isEmptyObject } from '@core/utils';
@@ -34,7 +35,7 @@ class UserService {
         return this.createToken(createdUser);
     }
 
-    public async deleteUser(userId: String) {
+    public async deleteUser(userId: string) {
         let status = await this.UserSchema.findByIdAndDelete(userId).exec();
         if (status) {
             return { message: 'Delete successfully' };
@@ -43,7 +44,7 @@ class UserService {
         }
     }
 
-    public async updateUser(userId: String, model: UpdateDto): Promise<IUser> {
+    public async updateUser(userId: string, model: UpdateDto): Promise<IUser> {
         if (isEmptyObject(model)) {
             throw new HttpException(400, 'Model is empty');
         }

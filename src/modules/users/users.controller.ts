@@ -1,7 +1,6 @@
 import IUser from '@modules/users/users.interface';
 import { TokenData } from '@modules/auth';
 import { NextFunction, Request, Response } from 'express';
-import { model } from 'mongoose';
 import { RegisterDto, UpdateDto } from './dtos/';
 import UserService from './user.service';
 
