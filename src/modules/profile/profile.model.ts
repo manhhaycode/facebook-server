@@ -6,15 +6,19 @@ const ProfileSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
+        require: true,
     },
     company: {
         type: String,
+        require: true,
     },
     websites: {
         type: [String],
+        require: true,
     },
     location: {
         type: String,
+        require: true,
     },
     status: {
         type: String,
@@ -26,6 +30,7 @@ const ProfileSchema = new mongoose.Schema({
     },
     bio: {
         type: String,
+        require: true,
     },
     experience: [
         {
@@ -42,7 +47,6 @@ const ProfileSchema = new mongoose.Schema({
             },
             from: {
                 type: Date,
-                required: true,
             },
             to: {
                 type: Date,

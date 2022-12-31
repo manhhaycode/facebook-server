@@ -1,5 +1,5 @@
 import { IProfile } from './profile.interface';
-import CreateProfileDto from './dtos/CreateProfile.dto';
+import { CreateProfileDto, ExperienceDto } from './dtos';
 import ProfileService from './profile.service';
 import { NextFunction, Request, Response } from 'express';
 import { TokenData } from '@modules/auth';
@@ -10,6 +10,16 @@ export default class ProfileController {
         try {
             const model: CreateProfileDto = req.body;
             const profile = await this.userService.createProfile(req.user.id, model);
+            res.status(201).json(profile);
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    public addExperience = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const experience: ExperienceDto = req.body;
+            const profile = await this.userService.addExperience(req.user.id, experience);
             res.status(201).json(profile);
         } catch (error) {
             next(error);
