@@ -1,5 +1,5 @@
-import { CreateProfileDto, ExperienceDto } from './dtos';
-import { IProfile, ISocial, IExperience } from './profile.interface';
+import { CreateProfileDto, EducationDto, ExperienceDto } from './dtos';
+import { IProfile, ISocial, IExperience, IEducation } from './profile.interface';
 import normalize from 'normalize-url';
 import ProfileSchema from './profile.model';
 import { HttpException } from '@core/exceptions';
@@ -62,6 +62,22 @@ class ProfileService {
             throw new HttpException(400, 'There is not profile for this user');
         }
         profile.experience.unshift(newExp as IExperience);
+        await profile.save();
+        return profile;
+    }
+
+    public async addEducation(userId: String, education: EducationDto): Promise<IProfile> {
+        const newEdu = {
+            ...education,
+        };
+
+        const profile = await ProfileSchema.findOne({ user: userId }).exec();
+        if (!profile) {
+            throw new HttpException(400, 'There is not profile for this user');
+        }
+
+        profile.education.unshift(newEdu as IEducation);
+
         await profile.save();
         return profile;
     }

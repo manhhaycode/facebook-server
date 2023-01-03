@@ -10,6 +10,7 @@ const validationMiddleware = (type: any, skipMissingProperties = false): Request
             if (errors.length > 0) {
                 const message = errors
                     .map((error: ValidationError) => {
+                        let a = Object.values(error.constraints!);
                         return Object.values(error.constraints!);
                     })
                     .join(', ');

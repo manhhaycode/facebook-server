@@ -1,12 +1,12 @@
-import { IsBoolean, IsDate, IsString } from 'class-validator';
+import { IsDate, IsString, IsBoolean } from 'class-validator';
 
-export default class ExperienceDto {
+export default class EducationDto {
     @IsString()
-    public title: string;
+    public school: string;
     @IsString()
-    public company: string;
+    public degree: string;
     @IsString()
-    public location: string;
+    public fieldofstudy: string;
     @IsDate()
     public from: Date;
     @IsDate()
@@ -17,18 +17,18 @@ export default class ExperienceDto {
     public description: string;
 
     constructor(
-        title: string,
-        company: string,
-        location: string,
+        school: string,
+        degree: string,
+        fieldofstudy: string,
         from: Date,
         to: Date,
         current: boolean,
         description: string,
     ) {
-        this.title = title;
-        this.company = company;
+        this.school = school;
+        this.degree = degree;
         this.current = current;
-        this.location = location;
+        this.fieldofstudy = fieldofstudy;
         this.from = from;
         this.to = to;
         this.current = current;
